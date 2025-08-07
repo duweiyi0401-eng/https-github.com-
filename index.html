@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片压缩工具 - 智能图片压缩</title>
+    <meta name="description" content="免费在线图片压缩工具，支持PNG、JPG等格式，具有苹果风格的现代化设计">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 引入苹果系统字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="background-decoration">
+        <div class="gradient-circle circle-1"></div>
+        <div class="gradient-circle circle-2"></div>
+        <div class="gradient-circle circle-3"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 头部标题 -->
+        <header class="header">
+            <h1 class="main-title">
+                <span class="title-icon">📸</span>
+                图片压缩工具
+            </h1>
+            <p class="subtitle">智能压缩，保持画质，苹果风格设计</p>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 上传区域 -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="upload-title">选择图片文件</h3>
+                        <p class="upload-description">支持 PNG、JPG、JPEG、WEBP 格式</p>
+                        <button class="upload-button" id="uploadButton">选择文件</button>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 压缩控制区域 -->
+            <section class="compression-section" id="compressionSection" style="display: none;">
+                <div class="compression-card">
+                    <h3 class="section-title">压缩设置</h3>
+                    
+                    <!-- 质量调节 -->
+                    <div class="quality-control">
+                        <label for="qualitySlider" class="quality-label">
+                            压缩质量: <span id="qualityValue">80%</span>
+                        </label>
+                        <div class="slider-container">
+                            <input type="range" id="qualitySlider" min="1" max="100" value="80" class="quality-slider">
+                            <div class="slider-track"></div>
+                        </div>
+                    </div>
+
+                    <!-- 格式选择 -->
+                    <div class="format-control">
+                        <label class="format-label">输出格式:</label>
+                        <div class="format-options">
+                            <button class="format-option active" data-format="jpeg">JPEG</button>
+                            <button class="format-option" data-format="png">PNG</button>
+                            <button class="format-option" data-format="webp">WEBP</button>
+                        </div>
+                    </div>
+
+                    <!-- 压缩按钮 -->
+                    <button class="compress-button" id="compressButton">
+                        <span class="button-icon">⚡</span>
+                        开始压缩
+                    </button>
+                </div>
+            </section>
+
+            <!-- 预览区域 -->
+            <section class="preview-section" id="previewSection" style="display: none;">
+                <div class="preview-container">
+                    <!-- 原图预览 -->
+                    <div class="preview-card">
+                        <h4 class="preview-title">原始图片</h4>
+                        <div class="image-container">
+                            <img id="originalImage" class="preview-image" alt="原始图片">
+                        </div>
+                        <div class="file-info">
+                            <span class="file-size" id="originalSize">0 KB</span>
+                            <span class="file-dimensions" id="originalDimensions">0 x 0</span>
+                        </div>
+                    </div>
+
+                    <!-- 压缩后预览 -->
+                    <div class="preview-card">
+                        <h4 class="preview-title">压缩后</h4>
+                        <div class="image-container">
+                            <img id="compressedImage" class="preview-image" alt="压缩后图片">
+                        </div>
+                        <div class="file-info">
+                            <span class="file-size" id="compressedSize">0 KB</span>
+                            <span class="file-dimensions" id="compressedDimensions">0 x 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 压缩结果统计 -->
+                <div class="compression-stats" id="compressionStats" style="display: none;">
+                    <div class="stat-card">
+                        <div class="stat-item">
+                            <span class="stat-label">压缩率</span>
+                            <span class="stat-value" id="compressionRatio">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">节省空间</span>
+                            <span class="stat-value" id="savedSpace">0 KB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 下载按钮 -->
+                <div class="download-section" id="downloadSection" style="display: none;">
+                    <button class="download-button" id="downloadButton">
+                        <span class="button-icon">⬇️</span>
+                        下载压缩图片
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p class="footer-text">
+                © 2024 图片压缩工具 | 纯前端实现，保护您的隐私
+            </p>
+        </footer>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p class="loading-text">正在压缩图片...</p>
+        </div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div class="error-toast" id="errorToast" style="display: none;">
+        <div class="toast-content">
+            <span class="toast-icon">⚠️</span>
+            <span class="toast-message" id="errorMessage">发生错误</span>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 
